@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Crypto — Fastest & secure platform to invest in crypto",
+  title: "Crypto: Fastest & secure platform to invest in crypto",
   description:
     "Buy and sell cryptocurrencies, trusted by 10M wallets with over $30 billion in transactions.",
 };

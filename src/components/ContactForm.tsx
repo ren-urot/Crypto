@@ -21,7 +21,7 @@ export default function ContactForm() {
           Message sent
         </h2>
         <p className="mt-4 text-base leading-relaxed text-[#2d2d2d]">
-          Thanks for reaching out — we&apos;ll be in touch soon.
+          Thanks for reaching out. We&apos;ll be in touch soon.
         </p>
       </div>
     );

@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import AboutIllustration from "@/components/AboutIllustration";
 
 const STATS = [
   { label: "Wallets trusted", value: "10M+" },
@@ -16,14 +17,16 @@ export default function AboutPage() {
       />
       <section className="bg-[#f2f2f4] px-9 pb-16">
         <div className="mx-auto max-w-[1228px] space-y-10">
-          <div className="rounded-[40px] bg-white p-10 md:p-16">
+          <div className="grid items-center gap-10 rounded-[40px] bg-white p-10 md:grid-cols-2 md:p-16">
             <p className="max-w-[700px] text-base leading-relaxed text-[#2d2d2d] md:text-lg">
               Crypto started with a simple idea: trading digital assets
               shouldn&apos;t require a finance degree or a tolerance for
               hidden fees. Since launch, we&apos;ve built a platform that
-              pairs bank-grade security with an interface anyone can use —
+              pairs bank-grade security with an interface anyone can use,
               from a first-time buyer to a full-time trader.
             </p>
+
+            <AboutIllustration />
           </div>
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">

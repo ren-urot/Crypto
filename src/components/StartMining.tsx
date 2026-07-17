@@ -24,7 +24,7 @@ export default function StartMining() {
           </h2>
           <p className="mt-2 max-w-[380px] text-sm leading-relaxed text-[#2d2d2d]">
             {status === "success"
-              ? "You're subscribed — check your inbox soon."
+              ? "You're subscribed. Check your inbox soon."
               : "Join now with Crypto to get the latest news and start mining now"}
           </p>
         </div>

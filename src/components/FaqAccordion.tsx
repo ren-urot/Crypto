@@ -13,7 +13,7 @@ const FAQS = [
   },
   {
     q: "How do I start mining?",
-    a: "Choose a mining pool from the Detailed Statistics dashboard, select a plan, and you can start mining in minutes — no hardware required.",
+    a: "Choose a mining pool from the Detailed Statistics dashboard, select a plan, and you can start mining in minutes. No hardware required.",
   },
   {
     q: "What are the fees?",
