@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HeroIllustration from "./HeroIllustration";
 
 export default function Hero() {
@@ -12,12 +13,12 @@ export default function Hero() {
             Buy and sell cryptocurrencies, trusted by 10M wallets with over
             $30 billion in transactions.
           </p>
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="mt-10 inline-block rounded-full bg-[#ffb506] px-10 py-5 text-sm font-bold tracking-[0.05em] text-[#39079e] uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205] hover:shadow-lg"
           >
             Get Started
-          </a>
+          </Link>
         </div>
 
         <div className="-translate-x-[80px] -translate-y-[40px] animate-float motion-reduce:animate-none">
