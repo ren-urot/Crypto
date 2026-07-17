@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "@/lib/session-context";
 import { useFakeSubmit } from "@/hooks/useFakeSubmit";
+import SignupWizard from "@/components/auth/SignupWizard";
 
 export default function LoginCard() {
   const router = useRouter();
@@ -53,55 +54,59 @@ export default function LoginCard() {
         </button>
       </div>
 
-      <h1 className="mt-8 font-semibold text-2xl text-[#39079e]">
-        {mode === "signin" ? "Welcome back" : "Create your account"}
-      </h1>
+      {mode === "signup" ? (
+        <div className="mt-8">
+          <SignupWizard onBackToSignIn={() => switchMode("signin")} />
+        </div>
+      ) : (
+        <>
+          <h1 className="mt-8 font-semibold text-2xl text-[#39079e]">
+            Welcome back
+          </h1>
 
-      <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        <div>
-          <label
-            htmlFor="login-email"
-            className="text-sm font-semibold text-[#2a2a2a]"
-          >
-            Email
-          </label>
-          <input
-            id="login-email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="login-password"
-            className="text-sm font-semibold text-[#2a2a2a]"
-          >
-            Password
-          </label>
-          <input
-            id="login-password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={status === "submitting" || status === "success"}
-          className="w-full rounded-full bg-[#ffb506] px-10 py-4 text-sm font-bold tracking-[0.05em] text-[#39079e] uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {status === "idle"
-            ? mode === "signin"
-              ? "Sign In"
-              : "Sign Up"
-            : "Please wait..."}
-        </button>
-      </form>
+          <form onSubmit={handleSubmit} className="mt-6 space-y-6">
+            <div>
+              <label
+                htmlFor="login-email"
+                className="text-sm font-semibold text-[#2a2a2a]"
+              >
+                Email
+              </label>
+              <input
+                id="login-email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="login-password"
+                className="text-sm font-semibold text-[#2a2a2a]"
+              >
+                Password
+              </label>
+              <input
+                id="login-password"
+                type="password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={status === "submitting" || status === "success"}
+              className="w-full rounded-full bg-[#ffb506] px-10 py-4 text-sm font-bold tracking-[0.05em] text-[#39079e] uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {status === "idle" ? "Sign In" : "Please wait..."}
+            </button>
+          </form>
+        </>
+      )}
     </div>
   );
 }
