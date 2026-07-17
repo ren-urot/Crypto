@@ -6,8 +6,8 @@ export default function PageHeader({
   description: string;
 }) {
   return (
-    <section className="bg-black px-9 pt-16 pb-10 md:pt-24">
-      <div className="mx-auto max-w-[1228px]">
+    <section className="bg-[#f2f2f4] px-9 pt-10 pb-10">
+      <div className="mx-auto max-w-[1228px] rounded-[20px] bg-black px-9 py-16 md:px-16 md:py-24">
         <h1 className="font-semibold text-[38px] leading-tight text-white md:text-[48px]">
           {title}
         </h1>
