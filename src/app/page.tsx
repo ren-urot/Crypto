@@ -1,3 +1,4 @@
+import Reveal from "@/components/Reveal";
 import Hero from "@/components/Hero";
 import TrustedPartners from "@/components/TrustedPartners";
 import WhyChoose from "@/components/WhyChoose";
@@ -11,13 +12,27 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <TrustedPartners />
-      <WhyChoose />
-      <MarketSentiments />
-      <InvestSmart />
-      <DetailedStats />
-      <GrowProfit />
-      <StartMining />
+      <Reveal>
+        <TrustedPartners />
+      </Reveal>
+      <Reveal>
+        <WhyChoose />
+      </Reveal>
+      <Reveal>
+        <MarketSentiments />
+      </Reveal>
+      <Reveal>
+        <InvestSmart />
+      </Reveal>
+      <Reveal>
+        <DetailedStats />
+      </Reveal>
+      <Reveal>
+        <GrowProfit />
+      </Reveal>
+      <Reveal>
+        <StartMining />
+      </Reveal>
     </>
   );
 }

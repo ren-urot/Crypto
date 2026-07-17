@@ -16,7 +16,7 @@ export default function GrowProfit() {
           </p>
           <a
             href="#"
-            className="mt-8 inline-block rounded-full bg-[#ffb506] px-8 py-4 text-xs font-bold tracking-[0.05em] text-[#39079e] uppercase hover:bg-[#e6a205]"
+            className="mt-8 inline-block rounded-full bg-[#ffb506] px-8 py-4 text-xs font-bold tracking-[0.05em] text-[#39079e] uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205] hover:shadow-lg"
           >
             Learn More
           </a>
