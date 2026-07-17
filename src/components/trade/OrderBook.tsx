@@ -15,7 +15,7 @@ export default function OrderBook({
   const { bids, asks } = generateOrderBook(coinId, currentPrice);
 
   return (
-    <div className="rounded-[40px] bg-white p-6">
+    <div className="rounded-[20px] bg-white p-6">
       <h3 className="font-semibold text-lg text-[#39079e]">Order Book</h3>
       <div className="mt-4 grid grid-cols-2 gap-4">
         <div>

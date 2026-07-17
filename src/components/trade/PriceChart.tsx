@@ -66,7 +66,7 @@ export default function PriceChart({
   }, [coinId, currentPrice]);
 
   return (
-    <div className="rounded-[40px] bg-white p-6">
+    <div className="rounded-[20px] bg-white p-6">
       <div ref={containerRef} />
     </div>
   );

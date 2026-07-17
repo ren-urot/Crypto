@@ -16,7 +16,7 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="mx-auto max-w-[600px] rounded-[40px] bg-white p-10 text-center md:p-16">
+      <div className="mx-auto max-w-[600px] rounded-[20px] bg-white p-10 text-center md:p-16">
         <h2 className="font-semibold text-2xl text-[#39079e]">
           Message sent
         </h2>
@@ -30,7 +30,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto max-w-[600px] space-y-6 rounded-[40px] bg-white p-10 md:p-16"
+      className="mx-auto max-w-[600px] space-y-6 rounded-[20px] bg-white p-10 md:p-16"
     >
       <div>
         <label htmlFor="name" className="text-sm font-semibold text-[#2a2a2a]">

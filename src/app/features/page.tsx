@@ -40,7 +40,7 @@ export default function FeaturesPage() {
           {FEATURES.map((feature) => (
             <div
               key={feature.title}
-              className="rounded-[40px] bg-white p-10 md:p-16"
+              className="rounded-[20px] bg-white p-10 md:p-16"
             >
               <div className="flex size-14 items-center justify-center rounded-2xl bg-[#f2f2f4]">
                 <feature.icon className="size-7 text-[#39079e]" />

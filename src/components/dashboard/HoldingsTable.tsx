@@ -2,7 +2,7 @@ import { COINS, formatUsd, type Wallet } from "@/lib/dashboard-data";
 
 export default function HoldingsTable({ wallet }: { wallet: Wallet }) {
   return (
-    <div className="overflow-x-auto rounded-[40px] bg-white p-8 md:p-10">
+    <div className="overflow-x-auto rounded-[20px] bg-white p-8 md:p-10">
       <table className="w-full text-left">
         <thead>
           <tr className="text-sm text-[#929292]">

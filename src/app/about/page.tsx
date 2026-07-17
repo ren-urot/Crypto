@@ -17,7 +17,7 @@ export default function AboutPage() {
       />
       <section className="bg-[#f2f2f4] px-9 pb-16">
         <div className="mx-auto max-w-[1228px] space-y-10">
-          <div className="grid items-center gap-10 rounded-[40px] bg-white p-10 md:grid-cols-2 md:p-16">
+          <div className="grid items-center gap-10 rounded-[20px] bg-white p-10 md:grid-cols-2 md:p-16">
             <p className="max-w-[700px] text-base leading-relaxed text-[#2d2d2d] md:text-lg">
               Crypto started with a simple idea: trading digital assets
               shouldn&apos;t require a finance degree or a tolerance for
@@ -33,7 +33,7 @@ export default function AboutPage() {
             {STATS.map((stat) => (
               <div
                 key={stat.label}
-                className="rounded-[40px] bg-white p-8 text-center transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
+                className="rounded-[20px] bg-white p-8 text-center transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
               >
                 <p className="font-semibold text-3xl text-[#39079e]">
                   {stat.value}

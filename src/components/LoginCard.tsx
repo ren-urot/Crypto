@@ -28,7 +28,7 @@ export default function LoginCard() {
   }
 
   return (
-    <div className="mx-auto max-w-[440px] rounded-[40px] bg-white p-10 md:p-16">
+    <div className="mx-auto max-w-[440px] rounded-[20px] bg-white p-10 md:p-16">
       <div className="flex gap-2 rounded-full bg-[#f2f2f4] p-1">
         <button
           type="button"

@@ -31,7 +31,7 @@ export default function PrivacyPolicyPage() {
         description="How Crypto collects, uses, and protects your information."
       />
       <section className="bg-[#f2f2f4] px-9 pb-16">
-        <div className="mx-auto max-w-[900px] space-y-8 rounded-[40px] bg-white p-10 md:p-16">
+        <div className="mx-auto max-w-[900px] space-y-8 rounded-[20px] bg-white p-10 md:p-16">
           {SECTIONS.map((section) => (
             <div key={section.title}>
               <h2 className="font-semibold text-xl text-[#39079e]">

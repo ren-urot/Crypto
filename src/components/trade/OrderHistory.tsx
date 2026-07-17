@@ -5,7 +5,7 @@ export default function OrderHistory({ orders }: { orders: Order[] }) {
   const history = orders.filter((order) => order.status !== "open");
 
   return (
-    <div className="rounded-[40px] bg-white p-6 md:p-8">
+    <div className="rounded-[20px] bg-white p-6 md:p-8">
       <h3 className="font-semibold text-lg text-[#39079e]">Order History</h3>
       {history.length === 0 ? (
         <p className="mt-4 text-sm text-[#929292]">No orders yet.</p>

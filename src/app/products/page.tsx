@@ -40,7 +40,7 @@ export default function ProductsPage() {
           {PRODUCTS.map((product) => (
             <div
               key={product.title}
-              className="rounded-[40px] bg-white p-10 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
+              className="rounded-[20px] bg-white p-10 transition-transform duration-200 hover:scale-[1.02] hover:shadow-lg"
             >
               <div className="flex size-14 items-center justify-center rounded-2xl bg-[#f2f2f4]">
                 <product.icon className="size-7 text-[#39079e]" />

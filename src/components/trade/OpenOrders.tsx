@@ -11,7 +11,7 @@ export default function OpenOrders({
   const openOrders = orders.filter((order) => order.status === "open");
 
   return (
-    <div className="rounded-[40px] bg-white p-6 md:p-8">
+    <div className="rounded-[20px] bg-white p-6 md:p-8">
       <h3 className="font-semibold text-lg text-[#39079e]">Open Orders</h3>
       {openOrders.length === 0 ? (
         <p className="mt-4 text-sm text-[#929292]">No open orders.</p>

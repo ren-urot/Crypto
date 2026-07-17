@@ -41,7 +41,7 @@ export default function TradePanel({
   }
 
   return (
-    <div className="rounded-[40px] bg-white p-8 md:p-10">
+    <div className="rounded-[20px] bg-white p-8 md:p-10">
       <h2 className="font-semibold text-2xl text-[#39079e]">Trade</h2>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">

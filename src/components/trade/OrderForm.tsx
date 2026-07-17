@@ -95,7 +95,7 @@ export default function OrderForm({
   }
 
   return (
-    <div className="rounded-[40px] bg-white p-6 md:p-8">
+    <div className="rounded-[20px] bg-white p-6 md:p-8">
       <h3 className="font-semibold text-lg text-[#39079e]">Place Order</h3>
 
       <div className="mt-4 flex gap-2 rounded-full bg-[#f2f2f4] p-1">
