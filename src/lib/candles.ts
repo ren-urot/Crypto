@@ -30,7 +30,7 @@ export function generateCandles(
   const scale = currentPrice / rawCloses[rawCloses.length - 1];
 
   const candles: Candle[] = [];
-  let prevClose = rawCloses[0] * scale * (1 + (random() - 0.5) * 0.02);
+  const prevClose = rawCloses[0] * scale * (1 + (random() - 0.5) * 0.02);
   for (let i = 0; i < count; i++) {
     const close = rawCloses[i] * scale;
     const open = i === 0 ? prevClose : candles[i - 1].close;

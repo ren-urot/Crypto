@@ -15,6 +15,7 @@ export default function TradeView() {
   const { onTrade } = useWallet();
   const [selectedCoinId, setSelectedCoinId] = useState<CoinId>("BTC");
   const [limitPrice, setLimitPrice] = useState("");
+  const [orderType, setOrderType] = useState<"market" | "limit">("market");
   const [orders, setOrders] = useState<Order[]>(SEED_ORDER_HISTORY);
 
   const coin = getCoin(selectedCoinId);
@@ -54,11 +55,16 @@ export default function TradeView() {
         <OrderBook
           coinId={selectedCoinId}
           currentPrice={coin.price}
-          onSelectPrice={(price) => setLimitPrice(price.toFixed(2))}
+          onSelectPrice={(price) => {
+            setLimitPrice(price.toFixed(2));
+            setOrderType("limit");
+          }}
         />
         <OrderForm
           coinId={selectedCoinId}
           currentPrice={coin.price}
+          orderType={orderType}
+          onOrderTypeChange={setOrderType}
           limitPrice={limitPrice}
           onLimitPriceChange={setLimitPrice}
           onMarketOrder={onTrade}

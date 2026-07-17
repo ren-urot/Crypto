@@ -11,6 +11,8 @@ type TradeResult =
 export default function OrderForm({
   coinId,
   currentPrice,
+  orderType,
+  onOrderTypeChange,
   limitPrice,
   onLimitPriceChange,
   onMarketOrder,
@@ -18,6 +20,8 @@ export default function OrderForm({
 }: {
   coinId: CoinId;
   currentPrice: number;
+  orderType: "market" | "limit";
+  onOrderTypeChange: (value: "market" | "limit") => void;
   limitPrice: string;
   onLimitPriceChange: (value: string) => void;
   onMarketOrder: (
@@ -27,7 +31,6 @@ export default function OrderForm({
   ) => TradeResult;
   onPlaceOrder: (order: Order) => void;
 }) {
-  const [orderType, setOrderType] = useState<"market" | "limit">("market");
   const [side, setSide] = useState<"buy" | "sell">("buy");
   const [amount, setAmount] = useState("");
   const [result, setResult] = useState<TradeResult | null>(null);
@@ -98,7 +101,7 @@ export default function OrderForm({
       <div className="mt-4 flex gap-2 rounded-full bg-[#f2f2f4] p-1">
         <button
           type="button"
-          onClick={() => setOrderType("market")}
+          onClick={() => onOrderTypeChange("market")}
           className={`flex-1 rounded-full py-2 text-xs font-semibold tracking-[0.05em] uppercase transition-colors ${
             orderType === "market"
               ? "bg-[#39079e] text-white"
@@ -109,7 +112,7 @@ export default function OrderForm({
         </button>
         <button
           type="button"
-          onClick={() => setOrderType("limit")}
+          onClick={() => onOrderTypeChange("limit")}
           className={`flex-1 rounded-full py-2 text-xs font-semibold tracking-[0.05em] uppercase transition-colors ${
             orderType === "limit"
               ? "bg-[#39079e] text-white"
