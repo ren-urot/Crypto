@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 44.0516 44.0516" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 760">
+<mask id="mask0_0_32" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="45" height="45">
+<path id="Path 579" d="M21.9461 0C12.0963 0.0264998 3.15156 6.70359 0.659889 16.6995C-2.28314 28.4881 4.89349 40.4488 16.6998 43.3917C28.4888 46.3347 40.4497 39.1583 43.3927 27.3523C43.8346 25.5797 44.048 23.8032 44.0516 22.0547V21.9663C44.0314 12.1046 37.3416 3.13868 27.3527 0.659741C25.5809 0.218193 23.8062 0.00447399 22.059 0H21.9461Z" fill="var(--fill-0, black)"/>
+</mask>
+<g mask="url(#mask0_0_32)">
+<path id="Rectangle 646" d="M-2.28338 0.000209105H44.0513V46.3349H-2.28338V0.000209105Z" fill="url(#paint0_linear_0_32)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_32" x1="-0.000264812" y1="44.0563" x2="0.171812" y2="44.0563" gradientUnits="userSpaceOnUse">
+<stop stop-color="#F9AA4B"/>
+<stop offset="1" stop-color="#F7931A"/>
+</linearGradient>
+</defs>
+</svg>

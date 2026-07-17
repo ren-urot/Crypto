@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 66.996 119.88" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 57">
+<mask id="mask0_0_145" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="67" height="120">
+<path id="Path 159" d="M14.0223 1.15984L13.9303 1.26959C6.27134 10.4315 4.5581 22.2671 5.00595 34.2002L3.48337 54.2034L0.0243367 97.6391C-0.216574 100.657 1.34694 103.533 4.0112 104.972L17.2061 112.1C21.9882 114.683 27.1544 116.482 32.5067 117.426L45.2946 119.683C52.867 121.019 59.887 115.395 60.2339 107.713C60.6761 97.9125 61.037 85.5255 60.4739 78.5785C59.6716 68.679 64.6374 38.6242 66.8683 25.8414C67.4905 22.2745 65.7996 18.7052 62.6465 16.926C55.4899 12.8889 44.1194 6.6744 44.1194 6.6744L29.2323 1.67605C29.2323 1.67605 20.6335 0.532021 16.881 0.027908C16.7415 0.00929695 16.6015 0 16.4629 0C15.537 0 14.6483 0.410647 14.0223 1.15984Z" fill="var(--fill-0, black)"/>
+</mask>
+<g mask="url(#mask0_0_145)">
+<path id="Rectangle 31" d="M-0.216662 -0.000222187H67.4904V121.019H-0.216662V-0.000222187Z" fill="url(#paint0_linear_0_145)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_145" x1="-87.3782" y1="286.823" x2="-86.9131" y2="286.823" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2E256B"/>
+<stop offset="1" stop-color="#5A3087"/>
+</linearGradient>
+</defs>
+</svg>
