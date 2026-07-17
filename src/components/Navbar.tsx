@@ -1,16 +1,29 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "@/lib/session-context";
 
-const NAV_LINKS = [
+const LOGGED_OUT_LINKS = [
   { label: "Products", href: "/products" },
   { label: "Features", href: "/features" },
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Trade", href: "/trade" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
+const LOGGED_IN_LINKS = [
+  { label: "Buy Crypto", href: "/buy-crypto" },
+  { label: "Markets", href: "/markets" },
+  { label: "Trade", href: "/trade" },
+  { label: "Grow", href: "/grow" },
+  { label: "Learn", href: "/learn" },
+  { label: "More", href: "/more" },
+];
+
 export default function Navbar() {
+  const { isLoggedIn } = useSession();
+  const navLinks = isLoggedIn ? LOGGED_IN_LINKS : LOGGED_OUT_LINKS;
+
   return (
     <header className="w-full bg-[#f2f2f4]">
       <div className="mx-auto flex max-w-[1520px] items-center justify-between px-9 py-4">
@@ -25,7 +38,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
@@ -37,10 +50,10 @@ export default function Navbar() {
         </nav>
 
         <Link
-          href="/login"
+          href={isLoggedIn ? "/dashboard" : "/login"}
           className="rounded-full bg-[#39079e] px-8 py-3 text-xs font-semibold tracking-[0.1em] text-white uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#2d0680] hover:shadow-lg"
         >
-          Login
+          {isLoggedIn ? "Dashboard" : "Login"}
         </Link>
       </div>
     </header>

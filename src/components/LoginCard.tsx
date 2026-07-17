@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useSession } from "@/lib/session-context";
 import { useFakeSubmit } from "@/hooks/useFakeSubmit";
 
 export default function LoginCard() {
   const router = useRouter();
+  const { login } = useSession();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,9 +15,10 @@ export default function LoginCard() {
 
   useEffect(() => {
     if (status === "success") {
+      login();
       router.push("/dashboard");
     }
-  }, [status, router]);
+  }, [status, login, router]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
