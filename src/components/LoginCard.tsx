@@ -1,13 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useFakeSubmit } from "@/hooks/useFakeSubmit";
 
 export default function LoginCard() {
+  const router = useRouter();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { status, submit, reset } = useFakeSubmit();
+
+  useEffect(() => {
+    if (status === "success") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -17,21 +25,6 @@ export default function LoginCard() {
   function switchMode(next: "signin" | "signup") {
     setMode(next);
     reset();
-  }
-
-  if (status === "success") {
-    return (
-      <div className="mx-auto max-w-[440px] rounded-[40px] bg-white p-10 text-center md:p-16">
-        <h1 className="font-semibold text-2xl text-[#39079e]">
-          {mode === "signin" ? "Welcome back" : "Account created"}
-        </h1>
-        <p className="mt-4 text-base leading-relaxed text-[#2d2d2d]">
-          {mode === "signin"
-            ? "You're signed in."
-            : "Check your inbox to confirm your email."}
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -96,14 +89,14 @@ export default function LoginCard() {
         </div>
         <button
           type="submit"
-          disabled={status === "submitting"}
+          disabled={status === "submitting" || status === "success"}
           className="w-full rounded-full bg-[#ffb506] px-10 py-4 text-sm font-bold tracking-[0.05em] text-[#39079e] uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205] hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-60"
         >
-          {status === "submitting"
-            ? "Please wait..."
-            : mode === "signin"
+          {status === "idle"
+            ? mode === "signin"
               ? "Sign In"
-              : "Sign Up"}
+              : "Sign Up"
+            : "Please wait..."}
         </button>
       </form>
     </div>
