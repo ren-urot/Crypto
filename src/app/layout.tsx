@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { WalletProvider } from "@/lib/wallet-context";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -25,7 +26,9 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <Navbar />
-        <main className="flex flex-1 flex-col">{children}</main>
+        <main className="flex flex-1 flex-col">
+          <WalletProvider>{children}</WalletProvider>
+        </main>
         <Footer />
       </body>
     </html>
