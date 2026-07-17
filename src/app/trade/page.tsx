@@ -9,7 +9,7 @@ export default function TradePage() {
         description="Buy and sell crypto with live-feeling markets, an order book, and full order history, all with dummy data."
       />
       <section className="bg-[#f2f2f4] px-9 pb-16">
-        <div className="mx-auto max-w-[1400px]">
+        <div className="mx-auto max-w-[1228px]">
           <TradeView />
         </div>
       </section>
