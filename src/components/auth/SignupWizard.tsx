@@ -83,7 +83,7 @@ export default function SignupWizard({
   useEffect(() => {
     if (status === "success") {
       login();
-      router.push("/trade");
+      router.push("/markets");
     }
   }, [status, login, router]);
 

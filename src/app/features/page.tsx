@@ -1,5 +1,4 @@
 import { BarChart3, PieChart, ShieldCheck, TrendingUp } from "lucide-react";
-import PageHeader from "@/components/PageHeader";
 
 const FEATURES = [
   {
@@ -30,31 +29,25 @@ const FEATURES = [
 
 export default function FeaturesPage() {
   return (
-    <>
-      <PageHeader
-        title="Features"
-        description="The tools that make Crypto the fastest and most secure way to manage your portfolio."
-      />
-      <section className="bg-[#f2f2f4] px-9 pb-16">
-        <div className="mx-auto flex max-w-[1228px] flex-col gap-8">
-          {FEATURES.map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-[20px] bg-white p-10 md:p-16"
-            >
-              <div className="flex size-14 items-center justify-center rounded-2xl bg-[#f2f2f4]">
-                <feature.icon className="size-7 text-[#39079e]" />
-              </div>
-              <h2 className="mt-6 font-semibold text-2xl text-[#39079e]">
-                {feature.title}
-              </h2>
-              <p className="mt-4 max-w-[700px] text-base leading-relaxed text-[#2d2d2d]">
-                {feature.description}
-              </p>
+    <section className="bg-[#f2f2f4] px-9 pt-16 pb-16">
+      <div className="mx-auto flex max-w-[1228px] flex-col gap-8">
+        {FEATURES.map((feature) => (
+          <div
+            key={feature.title}
+            className="rounded-[20px] bg-white p-10 md:p-16"
+          >
+            <div className="flex size-14 items-center justify-center rounded-2xl bg-[#f2f2f4]">
+              <feature.icon className="size-7 text-[#39079e]" />
             </div>
-          ))}
-        </div>
-      </section>
-    </>
+            <h2 className="mt-6 font-semibold text-2xl text-[#39079e]">
+              {feature.title}
+            </h2>
+            <p className="mt-4 max-w-[700px] text-base leading-relaxed text-[#2d2d2d]">
+              {feature.description}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
