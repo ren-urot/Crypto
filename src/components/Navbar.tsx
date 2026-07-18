@@ -9,6 +9,7 @@ import { useSession } from "@/lib/session-context";
 import { useWallet } from "@/lib/wallet-context";
 import { COINS, formatUsd } from "@/lib/dashboard-data";
 import BuyCryptoDropdown from "./BuyCryptoDropdown";
+import TradeDropdown from "./TradeDropdown";
 
 const LOGGED_OUT_LINKS = [
   { label: "Products", href: "/products" },
@@ -40,10 +41,14 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
-          {navLinks.map((link) =>
-            link.label === "Buy Crypto" ? (
-              <BuyCryptoDropdown key={link.label} />
-            ) : (
+          {navLinks.map((link) => {
+            if (link.label === "Buy Crypto") {
+              return <BuyCryptoDropdown key={link.label} />;
+            }
+            if (link.label === "Trade") {
+              return <TradeDropdown key={link.label} />;
+            }
+            return (
               <Link
                 key={link.label}
                 href={link.href}
@@ -51,8 +56,8 @@ export default function Navbar() {
               >
                 {link.label}
               </Link>
-            ),
-          )}
+            );
+          })}
         </nav>
 
         {isLoggedIn ? (
