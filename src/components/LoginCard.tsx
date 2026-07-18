@@ -17,7 +17,7 @@ export default function LoginCard() {
   useEffect(() => {
     if (status === "success") {
       login();
-      router.push("/dashboard");
+      router.push("/trade");
     }
   }, [status, login, router]);
 
