@@ -13,9 +13,11 @@ import type { CoinId } from "@/lib/dashboard-data";
 export default function PriceChart({
   coinId,
   currentPrice,
+  candleCount = 60,
 }: {
   coinId: CoinId;
   currentPrice: number;
+  candleCount?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +48,7 @@ export default function PriceChart({
     });
 
     series.setData(
-      generateCandles(coinId, currentPrice).map((candle) => ({
+      generateCandles(coinId, currentPrice, candleCount).map((candle) => ({
         ...candle,
         time: candle.time as UTCTimestamp,
       })),
@@ -63,7 +65,7 @@ export default function PriceChart({
       window.removeEventListener("resize", handleResize);
       chart.remove();
     };
-  }, [coinId, currentPrice]);
+  }, [coinId, currentPrice, candleCount]);
 
   return (
     <div className="rounded-[20px] bg-white p-6">
