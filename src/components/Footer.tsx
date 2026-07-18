@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useSession } from "@/lib/session-context";
 
 const MAIN_LINKS = [
   { label: "Products", href: "/products" },
@@ -10,6 +13,10 @@ const MAIN_LINKS = [
 const OTHER_LINKS = [
   { label: "Terms", href: "/terms" },
   { label: "FAQ", href: "/faq" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+];
+const LOGGED_IN_LINKS = [
+  { label: "Terms", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
@@ -30,6 +37,32 @@ function PaymentCard({
 }
 
 export default function Footer() {
+  const { isLoggedIn } = useSession();
+
+  if (isLoggedIn) {
+    return (
+      <footer className="bg-[#f2f2f4]">
+        <div className="border-t border-[#e5e5e5]" />
+        <div className="mx-auto flex max-w-[1520px] flex-col items-center gap-4 px-9 py-8 text-center">
+          <div className="flex gap-6">
+            {LOGGED_IN_LINKS.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="text-sm text-[#2a2a2a] hover:text-[#39079e]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+          <p className="text-xs text-[#787878]">
+            © {new Date().getFullYear()} Crypto. All rights Reserved.
+          </p>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-[#f2f2f4]">
       <div className="border-t border-[#e5e5e5]" />
