@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function TrustedPartners() {
   return (
     <section className="bg-[#f2f2f4] px-9">
-      <div className="relative mx-auto max-w-[1170px] -translate-y-[100px]">
+      <div className="relative mx-auto max-w-[1270px] -translate-y-[100px]">
         <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 translate-y-[calc(-50%+20px)] rounded-full bg-[#858585] px-8 py-3 text-sm font-medium tracking-wide text-white">
           Trusted Partners
         </span>
