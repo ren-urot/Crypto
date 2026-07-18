@@ -23,6 +23,7 @@ export default function OrderForm({
   onMarketOrder,
   onPlaceOrder,
   wallet,
+  marginEnabled = false,
 }: {
   coinId: CoinId;
   currentPrice: number;
@@ -37,6 +38,7 @@ export default function OrderForm({
   ) => TradeResult;
   onPlaceOrder: (order: Order) => void;
   wallet: Wallet;
+  marginEnabled?: boolean;
 }) {
   const [side, setSide] = useState<"buy" | "sell">("buy");
   const [amount, setAmount] = useState("");
@@ -48,8 +50,9 @@ export default function OrderForm({
     orderType === "market" ? currentPrice : Number(limitPrice) || currentPrice;
   const total = Number.isFinite(parsedAmount) ? parsedAmount * effectivePrice : 0;
 
-  const available = side === "buy" ? wallet.usd : wallet.holdings[coinId];
-  const maxAmount = side === "buy" ? wallet.usd / effectivePrice : wallet.holdings[coinId];
+  const buyingPower = side === "buy" && marginEnabled ? wallet.usd * 10 : wallet.usd;
+  const available = side === "buy" ? buyingPower : wallet.holdings[coinId];
+  const maxAmount = side === "buy" ? buyingPower / effectivePrice : wallet.holdings[coinId];
 
   function applyPercent(percent: number) {
     const next = (maxAmount * percent) / 100;
@@ -230,6 +233,13 @@ export default function OrderForm({
               className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
             />
           </div>
+
+          {side === "buy" && marginEnabled && (
+            <p className="text-xs text-[#929292]">
+              Margin buying power shown for demo purposes — orders still settle against your real
+              USDT balance.
+            </p>
+          )}
 
           <div className="flex gap-2">
             {PERCENT_STEPS.map((percent) => (

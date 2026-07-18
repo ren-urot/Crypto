@@ -11,6 +11,7 @@ import OrderForm from "./OrderForm";
 import PairHeader from "./PairHeader";
 import AccountPanel from "./AccountPanel";
 import FavoritesBar from "./FavoritesBar";
+import TradeToolbar from "./TradeToolbar";
 
 const TIME_RANGES = [
   { label: "15m", count: 48 },
@@ -35,6 +36,8 @@ export default function TradeView() {
   const [orderSubTab, setOrderSubTab] = useState<(typeof ORDER_SUBTABS)[number]>("Limit | Market");
   const [currentSymbolOnly, setCurrentSymbolOnly] = useState(false);
   const [favorites, setFavorites] = useState<CoinId[]>([]);
+  const [marginEnabled, setMarginEnabled] = useState(false);
+  const [isPanelCollapsed, setIsPanelCollapsed] = useState(false);
 
   const coin = getCoin(selectedCoinId);
   const isFavorite = favorites.includes(selectedCoinId);
@@ -83,7 +86,14 @@ export default function TradeView() {
         onToggleFavorite={toggleFavorite}
       />
 
-      <div className="grid gap-4 lg:grid-cols-[1fr_340px]">
+      <TradeToolbar
+        marginEnabled={marginEnabled}
+        onToggleMargin={() => setMarginEnabled((prev) => !prev)}
+        isPanelCollapsed={isPanelCollapsed}
+        onToggleCollapsed={() => setIsPanelCollapsed((prev) => !prev)}
+      />
+
+      <div className={`grid gap-4 ${isPanelCollapsed ? "" : "lg:grid-cols-[1fr_340px]"}`}>
         <div className="space-y-4">
           <div className="rounded-[20px] bg-white p-6">
             <div className="flex gap-6 border-b border-[#e5e5e5] text-sm font-semibold">
@@ -275,28 +285,31 @@ export default function TradeView() {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <OrderBook
-            coinId={selectedCoinId}
-            currentPrice={coin.price}
-            onSelectPrice={(price) => {
-              setLimitPrice(price.toFixed(2));
-              setOrderType("limit");
-            }}
-          />
-          <OrderForm
-            coinId={selectedCoinId}
-            currentPrice={coin.price}
-            orderType={orderType}
-            onOrderTypeChange={setOrderType}
-            limitPrice={limitPrice}
-            onLimitPriceChange={setLimitPrice}
-            onMarketOrder={onTrade}
-            onPlaceOrder={handlePlaceOrder}
-            wallet={wallet}
-          />
-          <AccountPanel wallet={wallet} totalValue={totalValue} coinId={selectedCoinId} />
-        </div>
+        {!isPanelCollapsed && (
+          <div className="space-y-4">
+            <OrderBook
+              coinId={selectedCoinId}
+              currentPrice={coin.price}
+              onSelectPrice={(price) => {
+                setLimitPrice(price.toFixed(2));
+                setOrderType("limit");
+              }}
+            />
+            <OrderForm
+              coinId={selectedCoinId}
+              currentPrice={coin.price}
+              orderType={orderType}
+              onOrderTypeChange={setOrderType}
+              limitPrice={limitPrice}
+              onLimitPriceChange={setLimitPrice}
+              onMarketOrder={onTrade}
+              onPlaceOrder={handlePlaceOrder}
+              wallet={wallet}
+              marginEnabled={marginEnabled}
+            />
+            <AccountPanel wallet={wallet} totalValue={totalValue} coinId={selectedCoinId} />
+          </div>
+        )}
       </div>
 
       <FavoritesBar

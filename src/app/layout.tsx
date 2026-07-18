@@ -27,11 +27,11 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <SessionProvider>
-          <Navbar />
-          <main className="flex flex-1 flex-col">
-            <WalletProvider>{children}</WalletProvider>
-          </main>
-          <Footer />
+          <WalletProvider>
+            <Navbar />
+            <main className="flex flex-1 flex-col">{children}</main>
+            <Footer />
+          </WalletProvider>
         </SessionProvider>
       </body>
     </html>
