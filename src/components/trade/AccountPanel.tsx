@@ -22,7 +22,11 @@ export default function AccountPanel({
           <span className="font-semibold text-[#2d2d2d]">{formatUsd(totalValue)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-[#929292]">USD balance</span>
+          <span className="text-[#929292]">In use</span>
+          <span className="font-semibold text-[#2d2d2d]">{formatUsd(0)}</span>
+        </div>
+        <div className="flex justify-between">
+          <span className="text-[#929292]">USDT balance</span>
           <span className="font-semibold text-[#2d2d2d]">{formatUsd(wallet.usd)}</span>
         </div>
         <div className="flex justify-between">

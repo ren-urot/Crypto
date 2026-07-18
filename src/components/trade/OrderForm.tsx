@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { formatUsd, getCoin, type CoinId, type Wallet } from "@/lib/dashboard-data";
 import { createOrder, type Order } from "@/lib/orders";
 
@@ -53,6 +54,21 @@ export default function OrderForm({
   function applyPercent(percent: number) {
     const next = (maxAmount * percent) / 100;
     setAmount(next > 0 ? next.toFixed(6) : "");
+  }
+
+  function nudgePrice(direction: 1 | -1) {
+    const tick = Math.max(effectivePrice * 0.0005, 0.01);
+    const base = Number(limitPrice) || currentPrice;
+    onLimitPriceChange((base + tick * direction).toFixed(2));
+  }
+
+  function handleTotalChange(value: string) {
+    const parsedTotal = Number(value);
+    if (!Number.isFinite(parsedTotal) || effectivePrice <= 0) {
+      setAmount("");
+      return;
+    }
+    setAmount((parsedTotal / effectivePrice).toFixed(6));
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -155,19 +171,39 @@ export default function OrderForm({
           {orderType === "limit" && (
             <div>
               <label htmlFor="order-price" className="text-sm font-semibold text-[#2a2a2a]">
-                Price (USD)
+                Price (USDT)
               </label>
               <div className="mt-2 flex items-center gap-2">
-                <input
-                  id="order-price"
-                  type="number"
-                  step="any"
-                  min="0"
-                  required
-                  value={limitPrice}
-                  onChange={(e) => onLimitPriceChange(e.target.value)}
-                  className="w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
-                />
+                <div className="flex flex-1 items-center border-b border-[#e5e5e5]">
+                  <input
+                    id="order-price"
+                    type="number"
+                    step="any"
+                    min="0"
+                    required
+                    value={limitPrice}
+                    onChange={(e) => onLimitPriceChange(e.target.value)}
+                    className="w-full bg-transparent pb-3 text-base text-[#2a2a2a] focus:outline-none"
+                  />
+                  <div className="flex flex-col pb-1">
+                    <button
+                      type="button"
+                      onClick={() => nudgePrice(1)}
+                      aria-label="Increase price"
+                      className="text-[#929292] hover:text-[#39079e]"
+                    >
+                      <ChevronUp size={14} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => nudgePrice(-1)}
+                      aria-label="Decrease price"
+                      className="text-[#929292] hover:text-[#39079e]"
+                    >
+                      <ChevronDown size={14} />
+                    </button>
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={() => onLimitPriceChange(currentPrice.toFixed(2))}
@@ -209,10 +245,18 @@ export default function OrderForm({
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-[#2a2a2a]">Total (USD)</p>
-            <p className="mt-2 border-b border-[#e5e5e5] pb-3 text-base text-[#2d2d2d]">
-              {formatUsd(total)}
-            </p>
+            <label htmlFor="order-total" className="text-sm font-semibold text-[#2a2a2a]">
+              Total (USDT)
+            </label>
+            <input
+              id="order-total"
+              type="number"
+              step="any"
+              min="0"
+              value={total ? total.toFixed(2) : ""}
+              onChange={(e) => handleTotalChange(e.target.value)}
+              className="mt-2 w-full border-b border-[#e5e5e5] bg-transparent pb-3 text-base text-[#2a2a2a] focus:border-[#39079e] focus:outline-none"
+            />
           </div>
 
           <div className="flex items-center justify-between text-xs text-[#929292]">
@@ -224,6 +268,13 @@ export default function OrderForm({
               {coin.symbol}
             </span>
           </div>
+
+          {orderType === "limit" && (
+            <div className="flex justify-between text-xs text-[#929292]">
+              <span>Max price</span>
+              <span>{formatUsd(currentPrice * 1.05)}</span>
+            </div>
+          )}
 
           <button
             type="submit"
