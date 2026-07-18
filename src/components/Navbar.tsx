@@ -8,6 +8,7 @@ import { Search, Download, Bell, HelpCircle, Globe, User, ChevronDown } from "lu
 import { useSession } from "@/lib/session-context";
 import { useWallet } from "@/lib/wallet-context";
 import { COINS, formatUsd } from "@/lib/dashboard-data";
+import BuyCryptoDropdown from "./BuyCryptoDropdown";
 
 const LOGGED_OUT_LINKS = [
   { label: "Products", href: "/products" },
@@ -39,15 +40,19 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-10 md:flex">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="font-semibold text-xs tracking-[0.1em] text-[#2a2a2a] uppercase transition-colors hover:text-[#39079e]"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) =>
+            link.label === "Buy Crypto" ? (
+              <BuyCryptoDropdown key={link.label} />
+            ) : (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="font-semibold text-xs tracking-[0.1em] text-[#2a2a2a] uppercase transition-colors hover:text-[#39079e]"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         {isLoggedIn ? (
