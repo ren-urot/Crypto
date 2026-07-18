@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PanelRightClose, PanelRightOpen } from "lucide-react";
+import ToolsPanel from "./ToolsPanel";
+import EnableBorrowingModal from "./EnableBorrowingModal";
 
 export default function TradeToolbar({
   marginEnabled,
@@ -14,25 +16,46 @@ export default function TradeToolbar({
   isPanelCollapsed: boolean;
   onToggleCollapsed: () => void;
 }) {
-  const [showToolsNote, setShowToolsNote] = useState(false);
+  const [showTools, setShowTools] = useState(false);
+  const [showBorrowingModal, setShowBorrowingModal] = useState(false);
+  const toolsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
+        setShowTools(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  function handleMarginClick() {
+    if (marginEnabled) {
+      onToggleMargin();
+    } else {
+      setShowBorrowingModal(true);
+    }
+  }
+
+  function handleEnableBorrowing() {
+    setShowBorrowingModal(false);
+    onToggleMargin();
+  }
 
   return (
     <div className="flex items-center justify-end gap-5 rounded-[20px] bg-white px-4 py-2">
       <span className="text-sm font-semibold text-[#39079e]">Trade</span>
 
-      <div className="relative">
+      <div ref={toolsRef} className="relative">
         <button
           type="button"
-          onClick={() => setShowToolsNote((prev) => !prev)}
+          onClick={() => setShowTools((prev) => !prev)}
           className="text-sm font-semibold text-[#929292] hover:text-[#2a2a2a]"
         >
           Tools
         </button>
-        {showToolsNote && (
-          <div className="absolute top-full right-0 z-20 mt-2 w-48 rounded-xl border border-[#e5e5e5] bg-white p-3 text-xs text-[#929292] shadow-2xl">
-            Chart drawing tools are coming soon.
-          </div>
-        )}
+        {showTools && <ToolsPanel onNavigate={() => setShowTools(false)} />}
       </div>
 
       <span className="h-5 w-px bg-[#e5e5e5]" />
@@ -43,7 +66,7 @@ export default function TradeToolbar({
           type="button"
           role="switch"
           aria-checked={marginEnabled}
-          onClick={onToggleMargin}
+          onClick={handleMarginClick}
           className={`h-5 w-9 rounded-full transition-colors ${
             marginEnabled ? "bg-[#39079e]" : "bg-[#e5e5e5]"
           }`}
@@ -66,6 +89,13 @@ export default function TradeToolbar({
       >
         {isPanelCollapsed ? <PanelRightOpen size={18} /> : <PanelRightClose size={18} />}
       </button>
+
+      {showBorrowingModal && (
+        <EnableBorrowingModal
+          onCancel={() => setShowBorrowingModal(false)}
+          onEnable={handleEnableBorrowing}
+        />
+      )}
     </div>
   );
 }
