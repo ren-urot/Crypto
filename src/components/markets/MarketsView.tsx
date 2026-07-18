@@ -284,7 +284,7 @@ export default function MarketsView() {
                         onSort={handleSort}
                       />
                     </th>
-                    <th className="pb-4 font-medium"></th>
+                    <th className="pb-4 font-medium text-right">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -323,10 +323,17 @@ export default function MarketsView() {
                         <td className="py-4 text-[#2d2d2d]">
                           {formatCompactUsd(coin.marketCap)}
                         </td>
-                        <td className="py-4 text-right">
+                        <td className="py-4 text-right text-sm whitespace-nowrap">
+                          <Link
+                            href={`/markets/${coin.id.toLowerCase()}`}
+                            className="font-semibold text-[#39079e] hover:underline"
+                          >
+                            Details
+                          </Link>
+                          <span className="mx-2 text-[#e5e5e5]">|</span>
                           <Link
                             href="/trade"
-                            className="rounded-full bg-[#ffb506] px-4 py-2 text-xs font-bold uppercase text-[#39079e] transition-transform duration-200 hover:scale-[1.03] hover:bg-[#e6a205]"
+                            className="font-semibold text-[#39079e] hover:underline"
                           >
                             Trade
                           </Link>
