@@ -43,6 +43,8 @@ export default function ToolsPanel({ onNavigate }: { onNavigate: () => void }) {
           <Link
             key={tool.href}
             href={tool.href}
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={onNavigate}
             className="flex items-start gap-3 rounded-xl p-2 transition-colors hover:bg-[#f2f2f4]"
           >
