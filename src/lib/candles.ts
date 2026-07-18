@@ -6,6 +6,7 @@ export type Candle = {
   high: number;
   low: number;
   close: number;
+  volume: number;
 };
 
 // Fixed reference timestamp (2026-07-17T00:00:00Z), NOT Date.now() — the
@@ -19,8 +20,12 @@ export function generateCandles(
   coinId: string,
   currentPrice: number,
   count = 60,
+  dailyVolume = currentPrice * 500_000,
 ): Candle[] {
   const random = createSeededRandom(coinId);
+  // Independent stream so adding volume never perturbs existing price data.
+  const volumeRandom = createSeededRandom(`${coinId}-candle-volume`);
+  const baseVolumePerCandle = dailyVolume / 24;
 
   const rawCloses: number[] = [1];
   for (let i = 1; i < count; i++) {
@@ -36,12 +41,14 @@ export function generateCandles(
     const open = i === 0 ? prevClose : candles[i - 1].close;
     const high = Math.max(open, close) * (1 + random() * 0.008);
     const low = Math.min(open, close) * (1 - random() * 0.008);
+    const volume = baseVolumePerCandle * (0.4 + volumeRandom() * 1.2);
     candles.push({
       time: REFERENCE_TIME - (count - 1 - i) * HOUR_SECONDS,
       open,
       high,
       low,
       close,
+      volume,
     });
   }
   return candles;

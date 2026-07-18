@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { generateOrderBook } from "@/lib/order-book";
+import { getRecentTrades } from "@/lib/trade-feed";
 import { formatUsd, type CoinId } from "@/lib/dashboard-data";
 
 export default function OrderBook({
@@ -12,45 +14,114 @@ export default function OrderBook({
   currentPrice: number;
   onSelectPrice: (price: number) => void;
 }) {
+  const [tab, setTab] = useState<"book" | "trades">("book");
   const { bids, asks } = generateOrderBook(coinId, currentPrice);
+  const trades = getRecentTrades(coinId, currentPrice);
+
+  const totalBidVolume = bids.reduce((sum, row) => sum + row.amount, 0);
+  const totalAskVolume = asks.reduce((sum, row) => sum + row.amount, 0);
+  const totalVolume = totalBidVolume + totalAskVolume;
+  const bidPercent = totalVolume > 0 ? (totalBidVolume / totalVolume) * 100 : 50;
 
   return (
     <div className="rounded-[20px] bg-white p-6">
-      <h3 className="font-semibold text-lg text-[#39079e]">Order Book</h3>
-      <div className="mt-4 grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-sm text-[#929292]">Bids</p>
-          <div className="mt-2 space-y-1">
-            {bids.map((row) => (
-              <button
-                key={row.price}
-                type="button"
-                onClick={() => onSelectPrice(row.price)}
-                className="flex w-full justify-between rounded-lg px-2 py-1 text-sm hover:bg-[#f2f2f4]"
-              >
-                <span className="text-green-600">{formatUsd(row.price)}</span>
-                <span className="text-[#2d2d2d]">{row.amount.toFixed(3)}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-        <div>
-          <p className="text-sm text-[#929292]">Asks</p>
-          <div className="mt-2 space-y-1">
-            {asks.map((row) => (
-              <button
-                key={row.price}
-                type="button"
-                onClick={() => onSelectPrice(row.price)}
-                className="flex w-full justify-between rounded-lg px-2 py-1 text-sm hover:bg-[#f2f2f4]"
-              >
-                <span className="text-red-600">{formatUsd(row.price)}</span>
-                <span className="text-[#2d2d2d]">{row.amount.toFixed(3)}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+      <div className="flex gap-6">
+        <button
+          type="button"
+          onClick={() => setTab("book")}
+          className={`text-sm font-semibold ${
+            tab === "book" ? "text-[#39079e]" : "text-[#929292] hover:text-[#2a2a2a]"
+          }`}
+        >
+          Order Book
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("trades")}
+          className={`text-sm font-semibold ${
+            tab === "trades" ? "text-[#39079e]" : "text-[#929292] hover:text-[#2a2a2a]"
+          }`}
+        >
+          Last Trades
+        </button>
       </div>
+
+      {tab === "book" ? (
+        <>
+          <div className="mt-4 grid grid-cols-2 gap-x-4 text-xs text-[#929292]">
+            <div className="flex justify-between px-2">
+              <span>Price</span>
+              <span>Amount</span>
+            </div>
+            <div className="flex justify-between px-2">
+              <span>Price</span>
+              <span>Amount</span>
+            </div>
+          </div>
+          <div className="mt-1 grid grid-cols-2 gap-4">
+            <div className="space-y-0.5">
+              {[...asks].reverse().map((row) => (
+                <button
+                  key={row.price}
+                  type="button"
+                  onClick={() => onSelectPrice(row.price)}
+                  className="flex w-full justify-between rounded-lg px-2 py-1 text-sm hover:bg-[#f2f2f4]"
+                >
+                  <span className="text-red-600">{formatUsd(row.price)}</span>
+                  <span className="text-[#2d2d2d]">{row.amount.toFixed(3)}</span>
+                </button>
+              ))}
+            </div>
+            <div className="space-y-0.5">
+              {bids.map((row) => (
+                <button
+                  key={row.price}
+                  type="button"
+                  onClick={() => onSelectPrice(row.price)}
+                  className="flex w-full justify-between rounded-lg px-2 py-1 text-sm hover:bg-[#f2f2f4]"
+                >
+                  <span className="text-green-600">{formatUsd(row.price)}</span>
+                  <span className="text-[#2d2d2d]">{row.amount.toFixed(3)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-lg bg-[#f2f2f4] px-3 py-2 text-center text-sm font-semibold text-[#2d2d2d]">
+            {formatUsd(currentPrice)}
+          </div>
+
+          <div className="mt-4">
+            <div className="flex h-2 overflow-hidden rounded-full">
+              <div className="bg-green-500" style={{ width: `${bidPercent}%` }} />
+              <div className="bg-red-500" style={{ width: `${100 - bidPercent}%` }} />
+            </div>
+            <div className="mt-1 flex justify-between text-xs">
+              <span className="font-semibold text-green-600">{bidPercent.toFixed(1)}% B</span>
+              <span className="font-semibold text-red-600">{(100 - bidPercent).toFixed(1)}% S</span>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="mt-4 flex justify-between px-2 text-xs text-[#929292]">
+            <span>Price</span>
+            <span>Amount</span>
+            <span>Time</span>
+          </div>
+          <div className="mt-1 max-h-[360px] space-y-0.5 overflow-y-auto">
+            {trades.map((trade, index) => (
+              <div key={index} className="flex justify-between px-2 py-1 text-sm">
+                <span className={trade.side === "buy" ? "text-green-600" : "text-red-600"}>
+                  {formatUsd(trade.price)}
+                </span>
+                <span className="text-[#2d2d2d]">{trade.amount.toFixed(3)}</span>
+                <span className="text-[#929292]">{trade.secondsAgo}s ago</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
