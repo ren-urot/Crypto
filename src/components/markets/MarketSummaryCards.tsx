@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
   COINS,
@@ -7,6 +10,8 @@ import {
 } from "@/lib/dashboard-data";
 import { generateCandles } from "@/lib/candles";
 import Sparkline from "./Sparkline";
+import SpotFuturesToggle from "./SpotFuturesToggle";
+import CardTitleLink from "./CardTitleLink";
 
 const NEW_LISTINGS = [
   { symbol: "NOVA", name: "Nova Chain", price: 4.82, change24h: 12.4 },
@@ -15,6 +20,13 @@ const NEW_LISTINGS = [
 ];
 
 export default function MarketSummaryCards() {
+  const [hotCryptoTab, setHotCryptoTab] = useState<"spot" | "futures">(
+    "spot",
+  );
+  const [newListingsTab, setNewListingsTab] = useState<"spot" | "futures">(
+    "spot",
+  );
+
   const hotCrypto = [...COINS]
     .sort((a, b) => Math.abs(b.change24h) - Math.abs(a.change24h))
     .slice(0, 3);
@@ -35,64 +47,93 @@ export default function MarketSummaryCards() {
   return (
     <div className="grid gap-6 md:grid-cols-5">
       <div className="rounded-[20px] bg-white p-6">
-        <h3 className="font-semibold text-[#39079e]">Hot crypto</h3>
-        <div className="mt-4 space-y-3">
-          {hotCrypto.map((coin) => (
-            <Link
-              key={coin.id}
-              href="/trade"
-              className="flex items-center justify-between rounded-xl px-2 py-1 transition-colors hover:bg-[#f2f2f4]"
-            >
-              <span className="font-semibold text-[#2d2d2d]">
-                {coin.symbol}
-              </span>
-              <span className="text-right text-sm">
-                <span className="text-[#2d2d2d]">
-                  {formatUsd(coin.price)}
-                </span>{" "}
-                <span
-                  className={
-                    coin.change24h >= 0 ? "text-green-600" : "text-red-600"
-                  }
-                >
-                  {formatPercent(coin.change24h)}
-                </span>
-              </span>
-            </Link>
-          ))}
+        <div className="flex items-center justify-between">
+          <CardTitleLink href="/markets/hot-crypto">
+            Hot crypto
+          </CardTitleLink>
         </div>
+        <div className="mt-3">
+          <SpotFuturesToggle value={hotCryptoTab} onChange={setHotCryptoTab} />
+        </div>
+        {hotCryptoTab === "spot" ? (
+          <div className="mt-4 space-y-3">
+            {hotCrypto.map((coin) => (
+              <Link
+                key={coin.id}
+                href="/trade"
+                className="flex items-center justify-between rounded-xl px-2 py-1 transition-colors hover:bg-[#f2f2f4]"
+              >
+                <span className="font-semibold text-[#2d2d2d]">
+                  {coin.symbol}
+                </span>
+                <span className="text-right text-sm">
+                  <span className="text-[#2d2d2d]">
+                    {formatUsd(coin.price)}
+                  </span>{" "}
+                  <span
+                    className={
+                      coin.change24h >= 0 ? "text-green-600" : "text-red-600"
+                    }
+                  >
+                    {formatPercent(coin.change24h)}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 px-2 text-sm text-[#929292]">
+            Futures data coming soon.
+          </p>
+        )}
       </div>
 
       <div className="rounded-[20px] bg-white p-6">
-        <h3 className="font-semibold text-[#39079e]">New listings</h3>
-        <div className="mt-4 space-y-3">
-          {NEW_LISTINGS.map((coin) => (
-            <div
-              key={coin.symbol}
-              className="flex items-center justify-between px-2 py-1"
-            >
-              <span className="font-semibold text-[#2d2d2d]">
-                {coin.symbol}
-              </span>
-              <span className="text-right text-sm">
-                <span className="text-[#2d2d2d]">
-                  {formatUsd(coin.price)}
-                </span>{" "}
-                <span
-                  className={
-                    coin.change24h >= 0 ? "text-green-600" : "text-red-600"
-                  }
-                >
-                  {formatPercent(coin.change24h)}
-                </span>
-              </span>
-            </div>
-          ))}
+        <div className="flex items-center justify-between">
+          <CardTitleLink href="/markets/new-listings">
+            New listings
+          </CardTitleLink>
         </div>
+        <div className="mt-3">
+          <SpotFuturesToggle
+            value={newListingsTab}
+            onChange={setNewListingsTab}
+          />
+        </div>
+        {newListingsTab === "spot" ? (
+          <div className="mt-4 space-y-3">
+            {NEW_LISTINGS.map((coin) => (
+              <div
+                key={coin.symbol}
+                className="flex items-center justify-between px-2 py-1"
+              >
+                <span className="font-semibold text-[#2d2d2d]">
+                  {coin.symbol}
+                </span>
+                <span className="text-right text-sm">
+                  <span className="text-[#2d2d2d]">
+                    {formatUsd(coin.price)}
+                  </span>{" "}
+                  <span
+                    className={
+                      coin.change24h >= 0 ? "text-green-600" : "text-red-600"
+                    }
+                  >
+                    {formatPercent(coin.change24h)}
+                  </span>
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="mt-4 px-2 text-sm text-[#929292]">
+            Futures data coming soon.
+          </p>
+        )}
       </div>
 
       <div className="rounded-[20px] bg-white p-6 md:col-span-2">
-        <h3 className="font-semibold text-[#39079e]">Macro data</h3>
+        <CardTitleLink href="/markets/macro-data">Macro data</CardTitleLink>
         <div className="mt-4 flex items-baseline justify-between text-sm">
           <div>
             <p className="text-[#929292]">Market cap</p>
@@ -125,7 +166,9 @@ export default function MarketSummaryCards() {
       </div>
 
       <div className="rounded-[20px] bg-white p-6">
-        <h3 className="font-semibold text-[#39079e]">BTC ETF flows</h3>
+        <CardTitleLink href="/markets/btc-etf-flows">
+          BTC ETF flows
+        </CardTitleLink>
         <div className="mt-4 flex justify-between text-sm">
           <div>
             <p className="text-[#929292]">Daily net</p>
