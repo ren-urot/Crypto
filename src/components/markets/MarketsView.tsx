@@ -394,7 +394,7 @@ function CustomFiltersPanel({
   const [draft, setDraft] = useState<CustomFilters>(filters);
 
   return (
-    <div className="mt-4 rounded-2xl border border-[#e5e5e5] p-6">
+    <div className="mt-4 max-w-[450px] rounded-2xl border border-[#e5e5e5] p-6">
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-[#2a2a2a]">Custom filters</h3>
         <button type="button" onClick={onClose} aria-label="Close filters">
