@@ -16,10 +16,10 @@ export default function LoginCard() {
 
   useEffect(() => {
     if (status === "success") {
-      login();
+      login(email);
       router.push("/markets");
     }
-  }, [status, login, router]);
+  }, [status, login, router, email]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

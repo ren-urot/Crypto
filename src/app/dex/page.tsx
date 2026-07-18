@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import DexSwapView from "@/components/dex/DexSwapView";
 
 export default function DexPage() {
   return (
@@ -8,7 +9,7 @@ export default function DexPage() {
         description="Trade on-chain tokens using your Exchange balance."
       />
       <section className="bg-[#f2f2f4] px-9 py-16">
-        <p className="text-[#929292]">Coming soon.</p>
+        <DexSwapView />
       </section>
     </>
   );

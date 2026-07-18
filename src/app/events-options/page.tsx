@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import EventsOptionsView from "@/components/events-options/EventsOptionsView";
 
 export default function EventsOptionsPage() {
   return (
@@ -8,7 +9,7 @@ export default function EventsOptionsPage() {
         description="Trade on crypto price movements with events and options."
       />
       <section className="bg-[#f2f2f4] px-9 py-16">
-        <p className="text-[#929292]">Coming soon.</p>
+        <EventsOptionsView />
       </section>
     </>
   );

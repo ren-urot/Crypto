@@ -4,12 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Download, Bell, HelpCircle, Globe, User, ChevronDown } from "lucide-react";
+import { Search, Download, Bell, HelpCircle, Globe, ChevronDown } from "lucide-react";
 import { useSession } from "@/lib/session-context";
 import { useWallet } from "@/lib/wallet-context";
 import { COINS, formatUsd } from "@/lib/dashboard-data";
 import BuyCryptoDropdown from "./BuyCryptoDropdown";
 import TradeDropdown from "./TradeDropdown";
+import AccountDropdown from "./AccountDropdown";
 
 const LOGGED_OUT_LINKS = [
   { label: "Products", href: "/products" },
@@ -187,9 +188,7 @@ function LoggedInActions() {
         )}
       </div>
 
-      <Link href="/dashboard" aria-label="Dashboard" className="text-[#2a2a2a] hover:text-[#39079e]">
-        <User size={20} />
-      </Link>
+      <AccountDropdown />
 
       <span className="h-6 w-px bg-[#e5e5e5]" />
 

@@ -82,10 +82,10 @@ export default function SignupWizard({
 
   useEffect(() => {
     if (status === "success") {
-      login();
+      login(email);
       router.push("/markets");
     }
-  }, [status, login, router]);
+  }, [status, login, router, email]);
 
   function handleOtpChange(index: number, value: string) {
     const digit = value.replace(/[^0-9]/g, "").slice(-1);
