@@ -8,7 +8,7 @@ export default function TrustedPartners() {
           Trusted Partners
         </span>
 
-        <div className="flex scale-[0.8] flex-wrap items-center justify-between gap-10 rounded-[260px] bg-white px-16 py-10">
+        <div className="flex scale-[0.8] flex-wrap items-center justify-between gap-10 rounded-[260px] bg-white px-16 py-[21.25px]">
           <div className="flex flex-col items-center gap-2">
             <Image src="/assets/partners/binance-icon.svg" alt="" width={63} height={74} />
             <span className="text-lg font-bold tracking-tight text-[#231f20]">
