@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { WalletProvider } from "@/lib/wallet-context";
 import { SessionProvider } from "@/lib/session-context";
 import { BotsProvider } from "@/lib/bots-context";
+import { OrdersProvider } from "@/lib/orders-context";
 import "./globals.css";
 
 const montserrat = Montserrat({
@@ -30,9 +31,11 @@ export default function RootLayout({
         <SessionProvider>
           <WalletProvider>
             <BotsProvider>
-              <Navbar />
-              <main className="flex flex-1 flex-col">{children}</main>
-              <Footer />
+              <OrdersProvider>
+                <Navbar />
+                <main className="flex flex-1 flex-col">{children}</main>
+                <Footer />
+              </OrdersProvider>
             </BotsProvider>
           </WalletProvider>
         </SessionProvider>

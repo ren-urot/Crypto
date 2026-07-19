@@ -4,13 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Download, Bell, HelpCircle, Globe, ChevronDown } from "lucide-react";
+import { Search, Download, Bell, HelpCircle, Globe } from "lucide-react";
 import { useSession } from "@/lib/session-context";
-import { useWallet } from "@/lib/wallet-context";
-import { COINS, formatUsd } from "@/lib/dashboard-data";
+import { COINS } from "@/lib/dashboard-data";
 import BuyCryptoDropdown from "./BuyCryptoDropdown";
 import TradeDropdown from "./TradeDropdown";
 import AccountDropdown from "./AccountDropdown";
+import AssetsDropdown from "./AssetsDropdown";
 
 const LOGGED_OUT_LINKS = [
   { label: "Products", href: "/products" },
@@ -78,7 +78,6 @@ export default function Navbar() {
 
 function LoggedInActions() {
   const router = useRouter();
-  const { wallet, totalValue } = useWallet();
   const [openMenu, setOpenMenu] = useState<OpenMenu>(null);
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -110,8 +109,6 @@ function LoggedInActions() {
       setQuery("");
     }
   }
-
-  const topHoldings = COINS.filter((coin) => wallet.holdings[coin.id] > 0).slice(0, 3);
 
   return (
     <div ref={containerRef} className="flex items-center gap-4">
@@ -148,45 +145,7 @@ function LoggedInActions() {
         Deposit
       </Link>
 
-      <div className="relative">
-        <button
-          type="button"
-          onClick={() => toggleMenu("assets")}
-          className="flex items-center gap-1 text-xs font-semibold tracking-[0.05em] text-[#2a2a2a] uppercase hover:text-[#39079e]"
-        >
-          Assets
-          <ChevronDown size={14} className={openMenu === "assets" ? "rotate-180 transition-transform" : "transition-transform"} />
-        </button>
-        {openMenu === "assets" && (
-          <div className="absolute top-full right-0 z-20 mt-2 w-64 rounded-xl border border-[#e5e5e5] bg-white p-4 shadow-2xl">
-            <div className="flex justify-between text-sm">
-              <span className="text-[#929292]">Equity</span>
-              <span className="font-semibold text-[#2d2d2d]">{formatUsd(totalValue)}</span>
-            </div>
-            <div className="mt-2 flex justify-between text-sm">
-              <span className="text-[#929292]">USDT balance</span>
-              <span className="font-semibold text-[#2d2d2d]">{formatUsd(wallet.usd)}</span>
-            </div>
-            {topHoldings.length > 0 && (
-              <div className="mt-3 space-y-1 border-t border-[#e5e5e5] pt-3">
-                {topHoldings.map((coin) => (
-                  <div key={coin.id} className="flex justify-between text-sm">
-                    <span className="text-[#929292]">{coin.symbol}</span>
-                    <span className="text-[#2d2d2d]">{wallet.holdings[coin.id]}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            <Link
-              href="/dashboard"
-              onClick={() => setOpenMenu(null)}
-              className="mt-4 block rounded-full bg-[#39079e] px-4 py-2 text-center text-xs font-semibold text-white uppercase hover:bg-[#2d0680]"
-            >
-              Go to Dashboard
-            </Link>
-          </div>
-        )}
-      </div>
+      <AssetsDropdown />
 
       <AccountDropdown />
 

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { Inbox } from "lucide-react";
 import { useWallet } from "@/lib/wallet-context";
+import { useOrders } from "@/lib/orders-context";
 import { COINS, getCoin, type CoinId } from "@/lib/dashboard-data";
-import { SEED_ORDER_HISTORY, type Order } from "@/lib/orders";
 import PriceChart from "./PriceChart";
 import OrderBook from "./OrderBook";
 import OrderForm from "./OrderForm";
@@ -26,10 +26,10 @@ const ORDER_SUBTABS = ["Limit | Market", "Advanced limit", "TP/SL", "Trailing st
 
 export default function TradeView() {
   const { wallet, totalValue, onTrade } = useWallet();
+  const { orders, placeOrder, cancelOrder } = useOrders();
   const [selectedCoinId, setSelectedCoinId] = useState<CoinId>("BTC");
   const [limitPrice, setLimitPrice] = useState("");
   const [orderType, setOrderType] = useState<"market" | "limit" | "tpsl">("market");
-  const [orders, setOrders] = useState<Order[]>(SEED_ORDER_HISTORY);
   const [rangeIndex, setRangeIndex] = useState(1);
   const [chartTab, setChartTab] = useState<(typeof CHART_TABS)[number]>("Chart");
   const [bottomTab, setBottomTab] = useState<(typeof BOTTOM_TABS)[number]>("Open orders");
@@ -63,18 +63,6 @@ export default function TradeView() {
   function handleSelectCoin(coinId: CoinId) {
     setSelectedCoinId(coinId);
     setLimitPrice("");
-  }
-
-  function handlePlaceOrder(order: Order) {
-    setOrders((prev) => [order, ...prev]);
-  }
-
-  function handleCancelOrder(orderId: string) {
-    setOrders((prev) =>
-      prev.map((order) =>
-        order.id === orderId ? { ...order, status: "cancelled" as const } : order,
-      ),
-    );
   }
 
   return (
@@ -215,7 +203,7 @@ export default function TradeView() {
                           </div>
                           <button
                             type="button"
-                            onClick={() => handleCancelOrder(order.id)}
+                            onClick={() => cancelOrder(order.id)}
                             className="rounded-full border border-[#e5e5e5] px-4 py-2 text-xs font-semibold text-[#39079e] uppercase hover:bg-white"
                           >
                             Cancel
@@ -303,7 +291,7 @@ export default function TradeView() {
               limitPrice={limitPrice}
               onLimitPriceChange={setLimitPrice}
               onMarketOrder={onTrade}
-              onPlaceOrder={handlePlaceOrder}
+              onPlaceOrder={placeOrder}
               wallet={wallet}
               marginEnabled={marginEnabled}
             />
