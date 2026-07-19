@@ -177,7 +177,7 @@ export default function PriceChart({
   }, [coinId, currentPrice, candleCount, dailyVolume]);
 
   return (
-    <div className="rounded-[20px] bg-white p-[10px] md:p-6">
+    <div>
       {legend && (
         <div className="mb-2 hidden flex-wrap items-center gap-x-4 gap-y-1 text-xs md:flex">
           <span className="text-[#929292]">
