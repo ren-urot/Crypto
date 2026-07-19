@@ -37,7 +37,7 @@ const TOOLS = [
 
 export default function ToolsPanel({ onNavigate }: { onNavigate: () => void }) {
   return (
-    <div className="absolute top-full right-0 z-20 mt-2 w-80 rounded-2xl border border-[#e5e5e5] bg-white p-4 shadow-2xl">
+    <div className="absolute top-full right-0 z-20 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-2xl border border-[#e5e5e5] bg-white p-4 shadow-2xl">
       <div className="space-y-1">
         {TOOLS.map((tool) => (
           <Link

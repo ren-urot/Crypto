@@ -37,10 +37,10 @@ export default function TradeToolbar({
   }
 
   return (
-    <div className="flex items-center justify-end gap-5 rounded-[20px] bg-white px-4 py-2">
+    <div className="relative flex items-center justify-end gap-5 rounded-[20px] bg-white px-4 py-2">
       <span className="text-sm font-semibold text-[#39079e]">Trade</span>
 
-      <div ref={toolsRef} className="relative">
+      <div ref={toolsRef}>
         <button
           type="button"
           onClick={() => setShowTools((prev) => !prev)}
