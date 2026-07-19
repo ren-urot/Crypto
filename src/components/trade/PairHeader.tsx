@@ -48,43 +48,43 @@ export default function PairHeader({
         </p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="flex items-center gap-1 text-xs text-[#929292]">
           Index <ExternalLink size={11} />
         </p>
         <p className="text-sm text-[#2d2d2d]">{formatUsd(coin.price)}</p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="text-xs text-[#929292]">Mark price</p>
         <p className="text-sm text-[#2d2d2d]">{formatUsd(coin.price)}</p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="flex items-center gap-1 text-xs text-[#929292]">
           {coin.name} price <ExternalLink size={11} />
         </p>
         <p className="text-sm text-[#2d2d2d]">{formatUsd(coin.price)}</p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="text-xs text-[#929292]">24h low</p>
         <p className="text-sm text-[#2d2d2d]">{formatUsd(low)}</p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="text-xs text-[#929292]">24h high</p>
         <p className="text-sm text-[#2d2d2d]">{formatUsd(high)}</p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="text-xs text-[#929292]">24h volume ({coin.symbol})</p>
         <p className="text-sm text-[#2d2d2d]">
           {(coin.volume24h / coin.price).toLocaleString("en-US", { maximumFractionDigits: 0 })}
         </p>
       </div>
 
-      <div>
+      <div className="hidden md:block">
         <p className="text-xs text-[#929292]">24h turnover (USDT)</p>
         <p className="text-sm text-[#2d2d2d]">{formatCompactUsd(coin.volume24h)}</p>
       </div>
