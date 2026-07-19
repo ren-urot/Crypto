@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import type { CoinId } from "./dashboard-data";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "./safe-storage";
 
 export type BotType = "grid" | "arbitrage" | "dca" | "copy";
 
@@ -23,36 +24,35 @@ type BotsContextValue = {
 const BotsContext = createContext<BotsContextValue | null>(null);
 const STORAGE_KEY = "crypto-demo-bots";
 
-let botCounter = 0;
-
 export function BotsProvider({ children }: { children: ReactNode }) {
   const [bots, setBots] = useState<Bot[]>([]);
+  const botCounterRef = useRef(0);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = safeGetItem(STORAGE_KEY);
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as Bot[];
       setBots(parsed);
-      botCounter = parsed.reduce((max, bot) => Math.max(max, bot.order), 0);
+      botCounterRef.current = parsed.reduce((max, bot) => Math.max(max, bot.order), 0);
     } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+      safeRemoveItem(STORAGE_KEY);
     }
   }, []);
 
-  function persistBots(next: Bot[]) {
-    setBots(next);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  }
+  useEffect(() => {
+    safeSetItem(STORAGE_KEY, JSON.stringify(bots));
+  }, [bots]);
 
   function addBot(bot: Omit<Bot, "id" | "order">) {
-    botCounter += 1;
-    persistBots([{ ...bot, id: `bot-${botCounter}`, order: botCounter }, ...bots]);
+    botCounterRef.current += 1;
+    const order = botCounterRef.current;
+    setBots((current) => [{ ...bot, id: `bot-${order}`, order }, ...current]);
   }
 
   function removeBot(id: string): number {
     const bot = bots.find((b) => b.id === id);
-    persistBots(bots.filter((b) => b.id !== id));
+    setBots((current) => current.filter((b) => b.id !== id));
     return bot?.investment ?? 0;
   }
 

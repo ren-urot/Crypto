@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "./safe-storage";
 
 type SessionContextValue = {
   isLoggedIn: boolean;
@@ -17,27 +18,27 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = safeGetItem(STORAGE_KEY);
     if (!stored) return;
     try {
       const parsed = JSON.parse(stored) as { email: string };
       setEmail(parsed.email);
       setIsLoggedIn(true);
     } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+      safeRemoveItem(STORAGE_KEY);
     }
   }, []);
 
   function login(nextEmail: string) {
     setEmail(nextEmail);
     setIsLoggedIn(true);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ email: nextEmail }));
+    safeSetItem(STORAGE_KEY, JSON.stringify({ email: nextEmail }));
   }
 
   function logout() {
     setIsLoggedIn(false);
     setEmail(null);
-    window.localStorage.removeItem(STORAGE_KEY);
+    safeRemoveItem(STORAGE_KEY);
   }
 
   return (

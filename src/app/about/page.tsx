@@ -9,7 +9,7 @@ const STATS = [
 
 export default function AboutPage() {
   return (
-    <section className="bg-[#f2f2f4] px-9 pt-16 pb-16">
+    <section className="bg-[#f2f2f4] px-4 md:px-9 pt-16 pb-16">
       <div className="mx-auto max-w-[1228px] space-y-10">
         <div className="grid items-center gap-10 rounded-[20px] bg-white p-10 md:grid-cols-2 md:p-16">
           <p className="max-w-[700px] text-base leading-relaxed text-[#2d2d2d] md:text-lg">

@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { SEED_ORDER_HISTORY, type Order } from "./orders";
+import { safeGetItem, safeSetItem, safeRemoveItem } from "./safe-storage";
 
 type OrdersContextValue = {
   orders: Order[];
@@ -16,27 +17,26 @@ export function OrdersProvider({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<Order[]>(SEED_ORDER_HISTORY);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
+    const stored = safeGetItem(STORAGE_KEY);
     if (!stored) return;
     try {
       setOrders(JSON.parse(stored) as Order[]);
     } catch {
-      window.localStorage.removeItem(STORAGE_KEY);
+      safeRemoveItem(STORAGE_KEY);
     }
   }, []);
 
-  function persistOrders(next: Order[]) {
-    setOrders(next);
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  }
+  useEffect(() => {
+    safeSetItem(STORAGE_KEY, JSON.stringify(orders));
+  }, [orders]);
 
   function placeOrder(order: Order) {
-    persistOrders([order, ...orders]);
+    setOrders((current) => [order, ...current]);
   }
 
   function cancelOrder(orderId: string) {
-    persistOrders(
-      orders.map((order) =>
+    setOrders((current) =>
+      current.map((order) =>
         order.id === orderId ? { ...order, status: "cancelled" as const } : order,
       ),
     );

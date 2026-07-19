@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import {
   User,
   PieChart,
@@ -50,15 +51,7 @@ export default function AccountDropdown() {
   const [copied, setCopied] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(containerRef, () => setIsOpen(false));
 
   function handleCopyUid() {
     navigator.clipboard?.writeText(DEMO_UID);

@@ -4,8 +4,8 @@ import HeroIllustration from "./HeroIllustration";
 export default function Hero() {
   return (
     <section className="bg-[#f2f2f4]">
-      <div className="mx-auto grid max-w-[1520px] items-center gap-12 px-9 py-16 md:grid-cols-2 md:py-24">
-        <div className="translate-x-[80px] -translate-y-[100px]">
+      <div className="mx-auto grid max-w-[1520px] items-center gap-12 px-4 md:px-9 py-16 md:grid-cols-2 md:py-24">
+        <div className="md:translate-x-[80px] md:-translate-y-[100px]">
           <h1 className="font-semibold text-[42px] leading-[1.25] text-[#39079e] uppercase md:text-[56px]">
             Fastest &amp; secure platform to invest in crypto
           </h1>
@@ -21,7 +21,7 @@ export default function Hero() {
           </Link>
         </div>
 
-        <div className="-translate-x-[80px] -translate-y-[40px] animate-float motion-reduce:animate-none">
+        <div className="md:-translate-x-[80px] md:-translate-y-[40px] animate-float motion-reduce:animate-none">
           <HeroIllustration />
         </div>
       </div>

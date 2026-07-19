@@ -8,7 +8,7 @@ export default function CryptoCalculatorPage() {
         title="Crypto calculator"
         description="Check conversion rates and crypto values using this app's dummy prices."
       />
-      <section className="bg-[#f2f2f4] px-9 py-16">
+      <section className="bg-[#f2f2f4] px-4 md:px-9 py-16">
         <CryptoCalculatorView />
       </section>
     </>

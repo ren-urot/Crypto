@@ -20,6 +20,8 @@ const LOGGED_IN_LINKS = [
   { label: "Privacy Policy", href: "/privacy-policy" },
 ];
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 function PaymentCard({
   children,
   className = "",
@@ -43,7 +45,7 @@ export default function Footer() {
     return (
       <footer className="bg-[#f2f2f4]">
         <div className="border-t border-[#e5e5e5]" />
-        <div className="mx-auto flex max-w-[1520px] flex-col items-center gap-4 px-9 py-8 text-center">
+        <div className="mx-auto flex max-w-[1520px] flex-col items-center gap-4 px-4 md:px-9 py-8 text-center">
           <div className="flex gap-6">
             {LOGGED_IN_LINKS.map((link) => (
               <Link
@@ -56,7 +58,7 @@ export default function Footer() {
             ))}
           </div>
           <p className="text-xs text-[#787878]">
-            © {new Date().getFullYear()} Crypto. All rights Reserved.
+            © {CURRENT_YEAR} Crypto. All rights Reserved.
           </p>
         </div>
       </footer>
@@ -67,7 +69,7 @@ export default function Footer() {
     <footer className="bg-[#f2f2f4]">
       <div className="border-t border-[#e5e5e5]" />
 
-      <div className="mx-auto grid max-w-[1520px] grid-cols-2 gap-x-8 gap-y-12 px-9 py-16 md:grid-cols-4">
+      <div className="mx-auto grid max-w-[1520px] grid-cols-2 gap-x-8 gap-y-12 px-4 md:px-9 py-16 md:grid-cols-4">
         <div className="col-span-2 md:col-span-1">
           <Image
             src="/assets/footer/logo-footer.svg"
@@ -153,7 +155,7 @@ export default function Footer() {
       </div>
 
       <div className="bg-white py-6 text-center text-xs text-[#787878]">
-        © {new Date().getFullYear()} Crypto. All rights Reserved.
+        © {CURRENT_YEAR} Crypto. All rights Reserved.
       </div>
     </footer>
   );

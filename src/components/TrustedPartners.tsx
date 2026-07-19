@@ -2,17 +2,17 @@ import Image from "next/image";
 
 export default function TrustedPartners() {
   return (
-    <section className="bg-[#f2f2f4] px-9">
-      <div className="relative mx-auto max-w-[1270px] -translate-y-[100px]">
+    <section className="bg-[#f2f2f4] px-4 md:px-9">
+      <div className="relative mx-auto max-w-[1270px] md:-translate-y-[100px]">
         <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 translate-y-[calc(-50%+14px)] rounded-full bg-[#858585] px-8 py-3 text-sm font-medium tracking-wide text-white">
           Trusted Partners
         </span>
 
         <div className="flex scale-[0.8] flex-wrap items-center justify-between gap-10 rounded-[260px] bg-white px-16 py-[21.25px]">
           <div className="flex flex-col items-center gap-2">
-            <Image src="/assets/partners/binance-icon.svg" alt="" width={63} height={74} />
+            <Image src="/assets/partners/orbit-icon.svg" alt="" width={63} height={63} />
             <span className="text-lg font-bold tracking-tight text-[#231f20]">
-              BINANCE
+              ORBIT
             </span>
           </div>
 

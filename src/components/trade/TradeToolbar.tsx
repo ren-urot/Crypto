@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { PanelRightClose, PanelRightOpen } from "lucide-react";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import ToolsPanel from "./ToolsPanel";
 import EnableBorrowingModal from "./EnableBorrowingModal";
 
@@ -20,15 +21,7 @@ export default function TradeToolbar({
   const [showBorrowingModal, setShowBorrowingModal] = useState(false);
   const toolsRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (toolsRef.current && !toolsRef.current.contains(event.target as Node)) {
-        setShowTools(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(toolsRef, () => setShowTools(false));
 
   function handleMarginClick() {
     if (marginEnabled) {

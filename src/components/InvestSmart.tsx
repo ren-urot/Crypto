@@ -3,8 +3,8 @@ import InvestSmartIllustration from "./InvestSmartIllustration";
 
 export default function InvestSmart() {
   return (
-    <section className="bg-[#f2f2f4] px-9 py-10">
-      <div className="mx-auto grid max-w-[1228px] -translate-y-[80px] items-center gap-10 rounded-[40px] bg-white p-10 md:grid-cols-2 md:p-16">
+    <section className="bg-[#f2f2f4] px-4 md:px-9 py-10">
+      <div className="mx-auto grid max-w-[1228px] md:-translate-y-[80px] items-center gap-10 rounded-[40px] bg-white p-10 md:grid-cols-2 md:p-16">
         <div>
           <h2 className="font-semibold text-[30px] text-[#39079e]">
             Invest Smart

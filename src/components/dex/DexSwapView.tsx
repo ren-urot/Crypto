@@ -8,7 +8,7 @@ import { COINS, formatUsd, getCoin, type CoinId } from "@/lib/dashboard-data";
 type Result = { ok: true; message: string } | { ok: false; reason: string };
 
 export default function DexSwapView() {
-  const { wallet, onTrade } = useWallet();
+  const { wallet, swapCoins } = useWallet();
   const [fromCoinId, setFromCoinId] = useState<CoinId>("BTC");
   const [toCoinId, setToCoinId] = useState<CoinId>("ETH");
   const [fromAmount, setFromAmount] = useState("");
@@ -54,23 +54,11 @@ export default function DexSwapView() {
       return;
     }
 
-    const sellResult = onTrade(fromCoinId, "sell", parsedFromAmount);
-    if (!sellResult.ok) {
-      setResult(sellResult);
-      return;
+    const swapResult = swapCoins(fromCoinId, toCoinId, parsedFromAmount, toAmount);
+    setResult(swapResult);
+    if (swapResult.ok) {
+      setFromAmount("");
     }
-
-    const buyResult = onTrade(toCoinId, "buy", toAmount);
-    if (!buyResult.ok) {
-      setResult(buyResult);
-      return;
-    }
-
-    setResult({
-      ok: true,
-      message: `Swapped ${parsedFromAmount} ${fromCoin.symbol} for ${toAmount.toFixed(6)} ${toCoin.symbol}.`,
-    });
-    setFromAmount("");
   }
 
   return (

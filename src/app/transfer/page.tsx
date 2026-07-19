@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function TransferPage() {
   return (
-    <section className="bg-[#f2f2f4] px-9 py-16">
+    <section className="bg-[#f2f2f4] px-4 md:px-9 py-16">
       <div className="mx-auto max-w-[600px] rounded-[20px] bg-white p-8 text-center">
         <h2 className="font-semibold text-lg text-[#39079e]">Transfer</h2>
         <p className="mt-3 text-base leading-relaxed text-[#2d2d2d]">

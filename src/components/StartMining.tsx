@@ -13,7 +13,7 @@ export default function StartMining() {
   }
 
   return (
-    <section className="bg-[#f2f2f4] px-9 py-10">
+    <section className="bg-[#f2f2f4] px-4 md:px-9 py-10">
       <form
         onSubmit={handleSubmit}
         className="mx-auto flex max-w-[1228px] flex-col items-start gap-8 rounded-[40px] bg-white p-10 md:flex-row md:items-center md:justify-between md:p-16"

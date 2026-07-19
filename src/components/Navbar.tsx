@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search, Download, Bell, HelpCircle, Globe } from "lucide-react";
+import { Search, Download, Bell, HelpCircle, Globe, Menu, X } from "lucide-react";
 import { useSession } from "@/lib/session-context";
 import { COINS } from "@/lib/dashboard-data";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import BuyCryptoDropdown from "./BuyCryptoDropdown";
 import TradeDropdown from "./TradeDropdown";
 import AccountDropdown from "./AccountDropdown";
@@ -28,16 +29,23 @@ const LOGGED_IN_LINKS = [
   { label: "More", href: "/more" },
 ];
 
-type OpenMenu = "search" | "assets" | "bell" | "globe" | null;
+const MOBILE_QUICK_LINKS = [
+  { label: "Deposit", href: "/buy-crypto" },
+  { label: "My assets", href: "/assets" },
+  { label: "Help", href: "/faq" },
+];
+
+type OpenMenu = "search" | "bell" | "globe" | null;
 
 export default function Navbar() {
   const { isLoggedIn } = useSession();
   const navLinks = isLoggedIn ? LOGGED_IN_LINKS : LOGGED_OUT_LINKS;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="w-full bg-[#f2f2f4]">
-      <div className="mx-auto flex max-w-[1520px] items-center justify-between px-9 py-4">
-        <Link href="/">
+      <div className="mx-auto flex max-w-[1520px] items-center justify-between px-4 py-4 md:px-9">
+        <Link href="/" onClick={() => setMobileMenuOpen(false)}>
           <Image src="/assets/logo.svg" alt="Crypto" width={119} height={22} priority />
         </Link>
 
@@ -61,17 +69,63 @@ export default function Navbar() {
           })}
         </nav>
 
-        {isLoggedIn ? (
-          <LoggedInActions />
-        ) : (
-          <Link
-            href="/login"
-            className="rounded-full bg-[#39079e] px-8 py-3 text-xs font-semibold tracking-[0.1em] text-white uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#2d0680] hover:shadow-lg"
+        <div className="flex items-center gap-3">
+          {isLoggedIn ? (
+            <LoggedInActions />
+          ) : (
+            <Link
+              href="/login"
+              className="rounded-full bg-[#39079e] px-5 py-2.5 text-xs font-semibold tracking-[0.1em] text-white uppercase transition-transform duration-200 hover:scale-[1.03] hover:bg-[#2d0680] hover:shadow-lg md:px-8 md:py-3"
+            >
+              Login
+            </Link>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            className="text-[#2a2a2a] hover:text-[#39079e] md:hidden"
           >
-            Login
-          </Link>
-        )}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {mobileMenuOpen && (
+        <div className="border-t border-[#e5e5e5] bg-white px-4 py-4 md:hidden">
+          <nav className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-lg px-3 py-2.5 text-sm font-semibold text-[#2a2a2a] hover:bg-[#f2f2f4]"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {isLoggedIn && (
+            <>
+              <div className="my-3 border-t border-[#e5e5e5]" />
+              <nav className="flex flex-col gap-1">
+                {MOBILE_QUICK_LINKS.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="rounded-lg px-3 py-2.5 text-sm font-semibold text-[#2a2a2a] hover:bg-[#f2f2f4]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
 }
@@ -82,15 +136,7 @@ function LoggedInActions() {
   const [query, setQuery] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setOpenMenu(null);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(containerRef, () => setOpenMenu(null));
 
   function toggleMenu(menu: OpenMenu) {
     setOpenMenu((prev) => (prev === menu ? null : menu));
@@ -111,8 +157,8 @@ function LoggedInActions() {
   }
 
   return (
-    <div ref={containerRef} className="flex items-center gap-4">
-      <div className="relative">
+    <div ref={containerRef} className="flex items-center gap-3 md:gap-4">
+      <div className="relative hidden md:block">
         <button
           type="button"
           onClick={() => toggleMenu("search")}
@@ -140,22 +186,28 @@ function LoggedInActions() {
 
       <Link
         href="/buy-crypto"
-        className="rounded-full border border-[#39079e] px-5 py-2 text-xs font-semibold tracking-[0.05em] text-[#39079e] uppercase hover:bg-[#39079e] hover:text-white"
+        className="hidden rounded-full border border-[#39079e] px-5 py-2 text-xs font-semibold tracking-[0.05em] text-[#39079e] uppercase hover:bg-[#39079e] hover:text-white md:inline-block"
       >
         Deposit
       </Link>
 
-      <AssetsDropdown />
+      <div className="hidden md:block">
+        <AssetsDropdown />
+      </div>
 
       <AccountDropdown />
 
-      <span className="h-6 w-px bg-[#e5e5e5]" />
+      <span className="hidden h-6 w-px bg-[#e5e5e5] md:block" />
 
-      <Link href="/buy-crypto" aria-label="Deposit" className="text-[#2a2a2a] hover:text-[#39079e]">
+      <Link
+        href="/buy-crypto"
+        aria-label="Deposit"
+        className="hidden text-[#2a2a2a] hover:text-[#39079e] md:block"
+      >
         <Download size={20} />
       </Link>
 
-      <div className="relative">
+      <div className="relative hidden md:block">
         <button
           type="button"
           onClick={() => toggleMenu("bell")}
@@ -171,11 +223,15 @@ function LoggedInActions() {
         )}
       </div>
 
-      <Link href="/faq" aria-label="Help" className="text-[#2a2a2a] hover:text-[#39079e]">
+      <Link
+        href="/faq"
+        aria-label="Help"
+        className="hidden text-[#2a2a2a] hover:text-[#39079e] md:block"
+      >
         <HelpCircle size={20} />
       </Link>
 
-      <div className="relative">
+      <div className="relative hidden md:block">
         <button
           type="button"
           onClick={() => toggleMenu("globe")}

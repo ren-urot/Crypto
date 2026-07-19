@@ -29,7 +29,7 @@ const FEATURES = [
 
 export default function FeaturesPage() {
   return (
-    <section className="bg-[#f2f2f4] px-9 pt-16 pb-16">
+    <section className="bg-[#f2f2f4] px-4 md:px-9 pt-16 pb-16">
       <div className="mx-auto flex max-w-[1228px] flex-col gap-8">
         {FEATURES.map((feature) => (
           <div
