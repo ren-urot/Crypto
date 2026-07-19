@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import {
   COINS,
   INITIAL_WALLET,
@@ -22,12 +22,30 @@ type WalletContextValue = {
     side: "buy" | "sell",
     amount: number,
   ) => TradeResult;
+  reserveUsd: (amount: number) => TradeResult;
+  refundUsd: (amount: number) => void;
 };
 
 const WalletContext = createContext<WalletContextValue | null>(null);
+const STORAGE_KEY = "crypto-demo-wallet";
 
 export function WalletProvider({ children }: { children: ReactNode }) {
   const [wallet, setWallet] = useState<Wallet>(INITIAL_WALLET);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (!stored) return;
+    try {
+      setWallet(JSON.parse(stored) as Wallet);
+    } catch {
+      window.localStorage.removeItem(STORAGE_KEY);
+    }
+  }, []);
+
+  function persistWallet(next: Wallet) {
+    setWallet(next);
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  }
 
   function onTrade(
     coinId: CoinId,
@@ -44,7 +62,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
           reason: `You only have ${wallet.holdings[coinId]} ${coin.symbol}.`,
         };
       }
-      setWallet({
+      persistWallet({
         usd: wallet.usd + cost,
         holdings: {
           ...wallet.holdings,
@@ -65,7 +83,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         )} cash balance.`,
       };
     }
-    setWallet({
+    persistWallet({
       usd: wallet.usd - cost,
       holdings: {
         ...wallet.holdings,
@@ -78,9 +96,26 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     };
   }
 
+  function reserveUsd(amount: number): TradeResult {
+    if (amount > wallet.usd) {
+      return {
+        ok: false,
+        reason: `That would reserve ${formatUsd(amount)}, more than your ${formatUsd(
+          wallet.usd,
+        )} cash balance.`,
+      };
+    }
+    persistWallet({ ...wallet, usd: wallet.usd - amount });
+    return { ok: true, message: `Reserved ${formatUsd(amount)}.` };
+  }
+
+  function refundUsd(amount: number) {
+    persistWallet({ ...wallet, usd: wallet.usd + amount });
+  }
+
   return (
     <WalletContext.Provider
-      value={{ wallet, totalValue: getTotalValue(wallet), onTrade }}
+      value={{ wallet, totalValue: getTotalValue(wallet), onTrade, reserveUsd, refundUsd }}
     >
       {children}
     </WalletContext.Provider>
