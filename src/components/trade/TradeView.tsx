@@ -81,8 +81,8 @@ export default function TradeView() {
         onToggleCollapsed={() => setIsPanelCollapsed((prev) => !prev)}
       />
 
-      <div className={`grid gap-4 ${isPanelCollapsed ? "" : "lg:grid-cols-[1fr_340px]"}`}>
-        <div className="space-y-4">
+      <div className={`grid min-w-0 gap-4 ${isPanelCollapsed ? "" : "lg:grid-cols-[1fr_340px]"}`}>
+        <div className="min-w-0 space-y-4">
           <div className="rounded-[20px] bg-white p-6">
             <div className="flex gap-6 border-b border-[#e5e5e5] text-sm font-semibold">
               {CHART_TABS.map((label) => (
@@ -274,7 +274,7 @@ export default function TradeView() {
         </div>
 
         {!isPanelCollapsed && (
-          <div className="space-y-4">
+          <div className="min-w-0 space-y-4">
             <OrderBook
               coinId={selectedCoinId}
               currentPrice={coin.price}
